@@ -1,0 +1,13 @@
+{
+    "daily_goal": 2.0,
+    "working_hours": {
+        "start": "09:00",
+        "end": "17:00"
+    },
+    "custom_intervals": [],
+    "activity_level": "moderate",
+    "location": "London,UK",
+    "api_key": "",
+    "progress": 0.0,
+    "last_update": null
+}

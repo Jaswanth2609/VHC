@@ -1,0 +1,474 @@
+================================================================================
+                        HYDRATION COACH APPLICATION
+                           Project Documentation
+================================================================================
+
+PROJECT OVERVIEW
+--------------------------------------------------------------------------------
+The Hydration Coach is a comprehensive health and wellness application designed
+to help users maintain proper hydration throughout the day. The application
+provides both command-line (CLI) and graphical user interface (GUI) options,
+making it accessible for different user preferences and use cases.
+
+The application intelligently calculates personalized hydration goals based on
+user activity levels, weather conditions, and custom preferences. It sends
+timely reminders during working hours and tracks progress with detailed
+analytics and visualizations.
+
+
+KEY FEATURES
+--------------------------------------------------------------------------------
+
+1. DUAL INTERFACE OPTIONS
+   - Command-Line Interface (CLI): Lightweight terminal-based interaction
+   - Graphical User Interface (GUI): Rich, modern desktop application with
+     themed design and interactive elements
+
+2. INTELLIGENT HYDRATION TRACKING
+   - Personalized daily water intake goals (default: 2 liters)
+   - Activity level adjustments (low, moderate, high)
+   - Weather-based hydration recommendations using real-time weather data
+   - Automatic calculation of optimal water intake based on temperature and
+     conditions
+
+3. SMART NOTIFICATION SYSTEM
+   - Configurable reminder intervals during working hours
+   - Custom notification schedules or automatic distribution
+   - Sound notifications (optional)
+   - Multiple notification styles: standard, minimal, detailed
+   - Desktop notifications integrated with system
+
+4. PROGRESS TRACKING & ANALYTICS
+   - Real-time progress monitoring with visual indicators
+   - Daily, weekly, and monthly progress charts
+   - Historical data tracking and visualization
+   - Achievement tracking and motivational feedback
+   - Export data capabilities for external analysis
+
+5. CUSTOMIZABLE SETTINGS
+   - Adjustable daily hydration goals
+   - Custom working hours configuration
+   - Location-based weather integration
+   - Multiple color schemes (blue, teal, purple, orange, green)
+   - Theme customization (arc, radiance, clearlooks, etc.)
+   - Notification preferences
+
+6. WEATHER INTEGRATION
+   - Real-time weather data from OpenWeatherMap API
+   - Automatic hydration adjustments based on:
+     * Temperature (hot weather = more water needed)
+     * Humidity levels
+     * Weather conditions (sunny, rainy, cloudy, etc.)
+   - Location-based recommendations
+
+7. DATA PERSISTENCE
+   - Automatic saving of progress and settings
+   - Historical data storage in JSON format
+   - Daily progress history tracking
+   - Configuration backup and restore
+
+
+FILE STRUCTURE
+--------------------------------------------------------------------------------
+
+hydration-coach/
+│
+├── hydration_coach.py          # CLI version of the application
+├── hydration_coach_gui.py      # GUI version with full features
+├── config.json                 # User configuration and data storage
+├── generated-icon.png          # Application icon
+├── pyproject.toml              # Python project configuration
+├── replit.nix                  # Replit environment configuration
+├── uv.lock                     # Dependency lock file
+├── PROJECT.txt                 # This documentation file
+│
+└── utils/                      # Utility modules
+    ├── __init__.py             # Package initialization
+    ├── weather.py              # Weather API integration
+    ├── notifications.py        # Notification system
+    └── storage.py              # Data persistence layer
+
+
+INSTALLATION & SETUP
+--------------------------------------------------------------------------------
+
+PREREQUISITES:
+- Python 3.8 or higher
+- Internet connection (for weather data)
+- OpenWeatherMap API key (optional, for weather features)
+
+REQUIRED PACKAGES:
+- tkinter (included with Python)
+- ttkthemes (for GUI themes)
+- matplotlib (for charts and graphs)
+- Pillow (PIL) (for image handling)
+- requests (for API calls)
+- schedule (for timed notifications)
+
+INSTALLATION STEPS:
+
+1. Clone or download the project repository
+
+2. Install required dependencies:
+   The project uses UV package manager. Dependencies are automatically
+   managed in the Replit environment.
+
+3. Set up OpenWeatherMap API (Optional):
+   - Sign up at https://openweathermap.org/api
+   - Get your free API key
+   - Set environment variable: OPENWEATHERMAP_API_KEY=your_key_here
+   - Or configure within the application settings
+
+4. Run the application:
+   - For GUI version: python hydration_coach_gui.py
+   - For CLI version: python hydration_coach.py
+
+
+USAGE GUIDE
+--------------------------------------------------------------------------------
+
+GRAPHICAL USER INTERFACE (GUI):
+
+1. STARTING THE APPLICATION
+   Run: python hydration_coach_gui.py
+   
+   The main window displays:
+   - Current progress indicator (circular progress bar)
+   - Daily goal and current intake
+   - Water intake logging section
+   - Quick stats dashboard
+   - Progress charts and analytics
+
+2. LOGGING WATER INTAKE
+   - Enter amount in the input field (ml or liters)
+   - Click "Log Water Intake" button
+   - Progress updates automatically
+   - Achievement notifications appear when goals are reached
+
+3. CONFIGURING SETTINGS
+   Navigate to Settings tab:
+   - Adjust daily goal (liters)
+   - Set working hours (start and end times)
+   - Configure location for weather data
+   - Enable/disable notifications
+   - Customize notification sound and style
+   - Choose color scheme and theme
+   - Set activity level (low, moderate, high)
+
+4. VIEWING ANALYTICS
+   Navigate to Analytics tab:
+   - View daily progress chart
+   - Check weekly trends
+   - Analyze monthly patterns
+   - See achievement history
+   - Export data for external analysis
+
+5. MANAGING SCHEDULE
+   Navigate to Schedule tab:
+   - View upcoming reminder times
+   - Add custom reminder intervals
+   - Remove unwanted reminders
+   - Toggle automatic distribution
+
+6. RESETTING PROGRESS
+   - Click "Reset Progress" button
+   - Confirm the action
+   - Current day's progress clears (history is preserved)
+
+
+COMMAND-LINE INTERFACE (CLI):
+
+1. STARTING THE APPLICATION
+   Run: python hydration_coach.py
+   
+   Available commands:
+   - setup: Configure your profile and preferences
+   - log: Record water intake
+   - progress: View current progress
+   - schedule: View reminder schedule
+   - start: Begin the hydration coach service
+   - help: Show all available commands
+
+2. INITIAL SETUP
+   python hydration_coach.py setup
+   
+   Follow prompts to configure:
+   - Daily hydration goal
+   - Working hours
+   - Activity level
+   - Location for weather data
+   - API key (if available)
+
+3. LOGGING WATER INTAKE
+   python hydration_coach.py log 500
+   (Logs 500ml of water intake)
+
+4. CHECKING PROGRESS
+   python hydration_coach.py progress
+   (Displays current day's progress and goal)
+
+5. VIEWING SCHEDULE
+   python hydration_coach.py schedule
+   (Shows all scheduled reminder times)
+
+6. STARTING REMINDER SERVICE
+   python hydration_coach.py start
+   (Begins monitoring and sends notifications at scheduled times)
+
+
+CONFIGURATION DETAILS
+--------------------------------------------------------------------------------
+
+CONFIGURATION FILE: config.json
+
+The application stores all settings and data in config.json with the following
+structure:
+
+{
+  "daily_goal": 2.0,              // Daily water intake goal in liters
+  "working_hours": {
+    "start": "09:00",             // Start of working hours (HH:MM)
+    "end": "17:00"                // End of working hours (HH:MM)
+  },
+  "custom_intervals": [],         // Custom reminder times (HH:MM format)
+  "activity_level": "moderate",   // low, moderate, or high
+  "location": "London,UK",        // City,Country for weather data
+  "api_key": "",                  // OpenWeatherMap API key
+  "progress": 0.0,                // Current day's water intake (liters)
+  "last_update": null,            // Timestamp of last update
+  "notification_enabled": true,   // Enable/disable notifications
+  "notification_sound": true,     // Enable/disable notification sounds
+  "notification_style": "standard", // standard, minimal, or detailed
+  "theme": "arc",                 // GUI theme name
+  "color_scheme": "blue",         // Color scheme: blue, teal, purple, etc.
+  "history": {}                   // Historical daily progress data
+}
+
+ACTIVITY LEVEL MULTIPLIERS:
+- Low: 0.9x (sedentary work, minimal physical activity)
+- Moderate: 1.0x (normal daily activity, some walking)
+- High: 1.2x (active job, regular exercise, sports)
+
+WEATHER ADJUSTMENT FACTORS:
+- Temperature > 30°C: +20% hydration
+- Temperature > 25°C: +10% hydration
+- Sunny conditions: +5% hydration
+- High humidity: May reduce adjustment slightly
+
+
+COLOR SCHEMES
+--------------------------------------------------------------------------------
+
+AVAILABLE COLOR SCHEMES:
+
+1. BLUE (Default)
+   - Primary: #1976D2
+   - Secondary: #2196F3
+   - Accent: #BBDEFB
+   - Clean, professional look
+
+2. TEAL
+   - Primary: #00796B
+   - Secondary: #009688
+   - Accent: #B2DFDB
+   - Calming, natural feel
+
+3. PURPLE
+   - Primary: #512DA8
+   - Secondary: #673AB7
+   - Accent: #D1C4E9
+   - Creative, modern aesthetic
+
+4. ORANGE
+   - Primary: #E64A19
+   - Secondary: #FF5722
+   - Accent: #FFCCBC
+   - Energetic, warm appearance
+
+5. GREEN
+   - Primary: #388E3C
+   - Secondary: #4CAF50
+   - Accent: #C8E6C9
+   - Fresh, healthy vibe
+
+
+TECHNICAL DETAILS
+--------------------------------------------------------------------------------
+
+ARCHITECTURE:
+
+The application follows a modular architecture with clear separation of concerns:
+
+1. CORE APPLICATION LOGIC
+   - Main application files handle UI and user interaction
+   - Configuration management and state handling
+   - Progress calculation and goal tracking
+
+2. UTILITY MODULES (/utils)
+   
+   a. weather.py
+      - Fetches weather data from OpenWeatherMap API
+      - Calculates weather-based hydration adjustments
+      - Handles API errors and fallback scenarios
+   
+   b. notifications.py
+      - Manages desktop notification system
+      - Supports multiple notification styles
+      - Handles sound alerts
+      - Platform-specific notification implementations
+   
+   c. storage.py
+      - Handles data persistence (load/save operations)
+      - JSON file management
+      - Data validation and error handling
+      - Backup and recovery functions
+
+3. GUI COMPONENTS (hydration_coach_gui.py)
+   - Main application window and layout
+   - Dashboard with progress indicators
+   - Settings management interface
+   - Analytics and charting
+   - Schedule management
+   - About section and help
+
+DEPENDENCIES:
+
+- tkinter: Standard Python GUI framework
+- ttkthemes: Enhanced themes for tkinter applications
+- matplotlib: Data visualization and chart generation
+- Pillow (PIL): Image processing and display
+- requests: HTTP library for API calls
+- schedule: Job scheduling for timed reminders
+
+DATA FLOW:
+
+1. User configures settings → Saved to config.json
+2. Application loads configuration → Initializes UI and services
+3. Weather API fetches data → Calculates adjustment factors
+4. User logs water intake → Updates progress and storage
+5. Scheduler triggers → Sends notifications at intervals
+6. Progress updates → Refreshes UI and saves to storage
+7. Daily reset → Archives old data to history
+
+NOTIFICATION SYSTEM:
+
+The application uses platform-specific notification methods:
+- Linux: notify-send command via subprocess
+- macOS: osascript for native notifications
+- Windows: Windows 10 toast notifications (future enhancement)
+- Fallback: Console output for unsupported platforms
+
+
+FEATURES BREAKDOWN
+--------------------------------------------------------------------------------
+
+GUI VERSION EXCLUSIVE FEATURES:
+- Real-time circular progress indicator
+- Interactive charts and graphs (matplotlib integration)
+- Theme and color scheme customization
+- Visual notification settings
+- Drag-and-drop interface elements
+- Multi-tab interface (Dashboard, Analytics, Schedule, Settings, About)
+- Achievement animations and visual feedback
+- Export functionality for charts and data
+
+CLI VERSION FEATURES:
+- Lightweight and fast
+- Perfect for remote/headless systems
+- Scriptable and automatable
+- Low resource usage
+- Terminal-based progress bars
+- Integration with system cron jobs
+
+
+RECENT UPDATES & BUG FIXES
+--------------------------------------------------------------------------------
+
+LATEST FIXES:
+- Fixed button text visibility issue in GUI
+  * Changed button text color from white to dark (#212121)
+  * Affected buttons: Log Water Intake, Reset Progress, Save Settings
+  * Modified styles: Accent.TButton and Reset.TButton
+  * Location: apply_styles() method in hydration_coach_gui.py (lines 448, 452, 482)
+
+- Implemented reset progress functionality
+  * Added confirmation dialog before resetting
+  * Preserves historical data while clearing current progress
+  * Provides user feedback after reset operation
+
+
+FUTURE ENHANCEMENTS
+--------------------------------------------------------------------------------
+
+PLANNED FEATURES:
+- Mobile app version (React Native or Flutter)
+- Cloud synchronization across devices
+- Integration with fitness trackers (Fitbit, Apple Watch, etc.)
+- Hydration streak tracking and gamification
+- Social features (challenges, leaderboards)
+- Machine learning-based personalized recommendations
+- Multiple user profiles support
+- Medication reminder integration
+- Custom hydration goals for different beverages
+- Detailed nutritional tracking
+
+
+TROUBLESHOOTING
+--------------------------------------------------------------------------------
+
+COMMON ISSUES:
+
+1. Weather data not loading
+   Solution: Check internet connection and verify API key is set correctly
+
+2. Notifications not appearing
+   Solution: Enable notifications in system settings and check app permissions
+
+3. GUI not launching
+   Solution: Ensure tkinter is installed (python -m tkinter to test)
+
+4. Progress not saving
+   Solution: Check file permissions for config.json in application directory
+
+5. Charts not displaying
+   Solution: Ensure matplotlib is properly installed
+
+6. Button text not visible
+   Solution: Already fixed - update to latest version or change color scheme
+
+
+SUPPORT & DOCUMENTATION
+--------------------------------------------------------------------------------
+
+For additional help:
+- Review code comments in source files
+- Check configuration file for setting options
+- Test different themes and color schemes
+- Experiment with notification styles
+- Monitor console output for error messages
+
+
+LICENSE & CREDITS
+--------------------------------------------------------------------------------
+
+This application was developed as a health and wellness tool to promote
+proper hydration habits.
+
+THIRD-PARTY SERVICES:
+- OpenWeatherMap API for weather data
+- ttkthemes for GUI theming
+- matplotlib for data visualization
+
+
+VERSION INFORMATION
+--------------------------------------------------------------------------------
+
+Current Version: 1.0
+Last Updated: November 12, 2025
+Platform: Cross-platform (Linux, macOS, Windows)
+Python Version: 3.8+
+
+
+================================================================================
+                          END OF DOCUMENTATION
+================================================================================
