@@ -1,5 +1,4 @@
 # VHC
-Hydration coach
 OVERVIEW
 The Hydration Coach is a comprehensive health and wellness application designed
 to help users maintain proper hydration throughout the day. The application
